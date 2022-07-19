@@ -1,12 +1,19 @@
 package com.codestatse.coffee.dto;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
+
 public class CoffeePatchDto {
     private long coffeeId;
+    @Pattern(regexp = "^(?=\\s*\\S).*$")
     private String korName;
+    @Pattern(regexp = "^([A-Za-z])(\\s?[A-Za-z]).*$")
+    @Pattern(regexp = "^(?=\\s*\\S).*$")
     private String engName;
     private int price;
 
 
+    @Positive
     public long getCoffeeId() {
         return coffeeId;
     }

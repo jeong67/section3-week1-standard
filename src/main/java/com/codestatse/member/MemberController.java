@@ -6,15 +6,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.validation.Valid;
 
 @RestController //REST API의 리소스를 처리하기 위한 API 엔드 포인트로 동작함을 정의 , SpringBean 으로 등록
 @RequestMapping("/v1/members/")// 핸들러 메서드를 매핑해줌 , 공통 URL 설정
 public class MemberController {
 
     @PostMapping
-    public ResponseEntity postMember(@RequestBody MemberPostDto memberPostDto) {
+    public ResponseEntity postMember(@Valid @RequestBody MemberPostDto memberPostDto) {
 
         return new ResponseEntity<>(memberPostDto, HttpStatus.CREATED);
     }
