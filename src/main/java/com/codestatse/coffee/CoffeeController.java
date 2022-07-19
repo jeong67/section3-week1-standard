@@ -1,10 +1,10 @@
 package com.codestatse.coffee;
 
+import com.codestatse.coffee.dto.CoffeePatchDto;
+import com.codestatse.coffee.dto.CoffeePostDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,17 +13,46 @@ import java.util.Map;
 @RequestMapping("/v1/coffees") //공통 URL 설정 , 핸들러 메서드를 매핑
 public class CoffeeController {
 
-    public ResponseEntity postCoffee(@RequestParam("korName") String korName,
-                                    @RequestParam("engName") String engName,
-                                    @RequestParam("price") int price) {
+    public ResponseEntity postCoffee(@RequestBody CoffeePostDto coffeePostDto) {
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("korName", korName);
-        map.put("engName", engName);
-        map.put("price", price);
-
-        return new ResponseEntity<>(map, HttpStatus.CREATED);
+        return new ResponseEntity<>(coffeePostDto, HttpStatus.CREATED);
 
     }
+
+    @PatchMapping("/{coffee-id}")
+    public ResponseEntity patchCoffee (@PathVariable("coffee-id") long coffeeId,
+                                       @RequestBody CoffeePatchDto coffeePatchDto) {
+        coffeePatchDto.setCoffeeId(coffeeId);
+        coffeePatchDto.setKorName("바닐라라떼 빈");
+
+        return new ResponseEntity<>(coffeePatchDto,HttpStatus.OK);
+    }
+
+    @GetMapping("/{coffee-id}")
+    public ResponseEntity getCoffee(@PathVariable("coffee-id") long coffeeId) {
+        System.out.println("# coffeeId: " + coffeeId);
+
+        // not implementation
+
+        // (4) 리턴 값을 ResponseEntity 객체로 변경
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity getCoffees() {
+        System.out.println("# get Coffees");
+
+        // not implementation
+
+        // (5) 리턴 값을 ResponseEntity 객체로 변경
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{coffee-id}")
+    public ResponseEntity deleteCoffee(@PathVariable("coffee-id") long coffeeId) {
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
 
 }
